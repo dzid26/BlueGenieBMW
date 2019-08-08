@@ -94,42 +94,30 @@ void init_ArduinoOTA(const char *Hostname){
 
   ArduinoOTA.begin();
 }
-// void MCP2515_ISR()
-// {
-//     flagRecv = true;
-// }
 
 void init_CAN()
 {
-  for (int i=0; ( CAN.begin(CAN_100KBPS,MCP_8MHz)!=CAN_OK && i<11); i++)       // init can bus : baudrate = 500k
-  {
-      Serial.println("CAN BUS Shield init fail");
-      Serial.println("Init CAN BUS Shield again");
-      delay(100);
-  }
-  Serial.println("CAN BUS Shield init ok!");
+  if(CAN.begin(MCP_STDEXT, CAN_100KBPS, MCP_8MHZ)==CAN_OK )       // init can bus : baudrate = 500k
+    Serial.println("CAN BUS Shield init ok!");
+  else
+    Serial.println("CAN BUS Shield init fail");
+  CAN.setMode(MCP_LISTENONLY); 
 
   //attachInterrupt(digitalPinToInterrupt(MCP_INT_PIN), &MCP2515_ISR, FALLING); // interrupt not needed, since buffer reading logic is outside anyway
   pinMode(MCP_INT_PIN, INPUT);
 
-  /*
-    * set mask, set both the mask to 0x3ff
-    */
-  CAN.init_Mask(0, 0, 0x3ff);                         // there are 2 mask in mcp2515, you need to set both of them
-  CAN.init_Mask(1, 0, 0x3ff);
 
-
-  /*
-    * set filter, we can receive id from 0x04 ~ 0x09
-    */
-  CAN.init_Filt(0, 0, 470);                          // there are 6 filter in mcp2515
-  CAN.init_Filt(1, 0, 470);                          // there are 6 filter in mcp2515
-
-  CAN.init_Filt(2, 0, 470);                          // there are 6 filter in mcp2515
-  CAN.init_Filt(3, 0, 470);                          // there are 6 filter in mcp2515
-  CAN.init_Filt(4, 0, 470);                          // there are 6 filter in mcp2515
-  CAN.init_Filt(5, 0, 470);                          // there are 6 filter in mcp2515
+  CAN.init_Mask(0,0,0x07FF0000);                // Init first mask...
+  CAN.init_Filt(0,0,0x01d60000);                // Init first filter...
+  CAN.init_Filt(1,0,0x03b40000);                // Init second filter...
+  
+  CAN.init_Mask(1,0,0x07FF0000);                // Init second mask... 
+  CAN.init_Filt(2,0,0x01d60000);                // Init third filter...
+  CAN.init_Filt(3,0,0x01d60000);                // Init fouth filter...
+  CAN.init_Filt(4,0,0x01d60000);                // Init fifth filter...
+  CAN.init_Filt(5,0,0x01d60000);                // Init sixth filter...
 }
+
 
 void BletoothInitStates() {
   myTime=millis();
@@ -145,9 +133,6 @@ void BletoothInitStates() {
   myTime=millis();
   while (BT.getHFPStatus() != 1 && myTime - millis() < timeout);
 }
-
-
-
 
 void allServersPrint(String s){ 
   for (int i = 0; i < MAX_SRV_CLIENTS; i++) 
@@ -196,7 +181,6 @@ void setup()
 
 void handlingTelnetComm()
 {
-  
   //check if there are any new clients
   if (server.hasClient()) {
     //find free/disconnected spot
@@ -220,29 +204,29 @@ void handlingTelnetComm()
     }
   }
 
-  //check TCP clients for data
-#if 1
-  // Incredibly, this code is faster than the bufferred one below - #4620 is needed
-  // loopback/3000000baud average 348KB/s
-  for (int i = 0; i < MAX_SRV_CLIENTS; i++)
-    while (serverClients[i].available()) {//&& swSerial.availableForWrite() > 0) {
-      // working char by char is not very efficient
-      swSerial.write(serverClients[i].read());
-    }
-#else
-  // loopback/3000000baud average: 312KB/s
-  for (int i = 0; i < MAX_SRV_CLIENTS; i++)
-    while (serverClients[i].available() && Serial.availableForWrite() > 0) {
-      size_t maxToSerial = std::min(serverClients[i].available(), Serial.availableForWrite());
-      maxToSerial = std::min(maxToSerial, (size_t)STACK_PROTECTOR);
-      uint8_t buf[maxToSerial];
-      size_t tcp_got = serverClients[i].read(buf, maxToSerial);
-      size_t serial_sent = Serial.write(buf, tcp_got);
-      if (serial_sent != maxToSerial) {
-        logger->printf("len mismatch: available:%zd tcp-read:%zd serial-write:%zd\n", maxToSerial, tcp_got, serial_sent);
+    //check TCP clients for data
+  #if 1
+    // Incredibly, this code is faster than the bufferred one below - #4620 is needed
+    // loopback/3000000baud average 348KB/s
+    for (int i = 0; i < MAX_SRV_CLIENTS; i++)
+      while (serverClients[i].available()) {//&& swSerial.availableForWrite() > 0) {
+        // working char by char is not very efficient
+        swSerial.write(serverClients[i].read());
       }
-    }
-#endif
+  #else
+    // loopback/3000000baud average: 312KB/s
+    for (int i = 0; i < MAX_SRV_CLIENTS; i++)
+      while (serverClients[i].available() && Serial.availableForWrite() > 0) {
+        size_t maxToSerial = std::min(serverClients[i].available(), Serial.availableForWrite());
+        maxToSerial = std::min(maxToSerial, (size_t)STACK_PROTECTOR);
+        uint8_t buf[maxToSerial];
+        size_t tcp_got = serverClients[i].read(buf, maxToSerial);
+        size_t serial_sent = Serial.write(buf, tcp_got);
+        if (serial_sent != maxToSerial) {
+          logger->printf("len mismatch: available:%zd tcp-read:%zd serial-write:%zd\n", maxToSerial, tcp_got, serial_sent);
+        }
+      }
+  #endif
 
   // determine maximum output size "fair TCP use"
   // client.availableForWrite() returns 0 when !client.connected()
@@ -281,8 +265,6 @@ void handlingTelnetComm()
       }
   }
 }
-
-
 
 
 void printBTstate() {
@@ -351,7 +333,6 @@ void loop()
     printBTstate();
     BTState = BT.BTState;
   }
-
   handlingTelnetComm();
 
 
@@ -359,38 +340,40 @@ void loop()
 
 
 
-
+  long unsigned int canId;
   unsigned char message_length = 0;
   unsigned char message_buffer[8];
   String messageText;
   if(!digitalRead(MCP_INT_PIN))                   // check if get data
   {
-      CAN.readMsgBuf(&message_length, message_buffer);    // read data,  len: data length, buf: data buf
+      CAN.readMsgBuf(&canId, &message_length, message_buffer);    // read data,  len: data length, buf: data buf
       //Print raw messages
-      messageText = "\r\n---------------------------\r\n" + String(CAN.getCanId()) + ":  0x";
+      messageText = "\r\n---------------------------\r\n" + String(canId) + ":  0x";
       for(int j = 0; j<message_length; j++)    // print the data
         messageText += String(message_buffer[j], HEX) + "\t";
-      allServersPrintLn(messageText);
       Serial.println(messageText);
+      allServersPrintLn(messageText);
 
       //Extract messages
-      if (CAN.getCanId() == 470)
-        if (message_buffer[0] != 0xFF) //indicates steering buttons error
+      if (canId == 470)
+        if (message_buffer[0] != 0xFF){ //indicates steering buttons error
           nextUpButton = bitRead(message_buffer[0], 5);
           prevDnButton = bitRead(message_buffer[0], 4);
           volUpButton = bitRead(message_buffer[0], 3);
           volDnButton = bitRead(message_buffer[0], 2);
+        }
   }
 
   if ((nextUpButton && volUpButton) || initialConfigNeeded) //add VehSpd==0 condition
-    wifiConfigureOnEvent(); //two up buttons hel - configure WiFi connection. Stops anything else
+    wifiConfigureOnEvent(); //two up buttons held - configure WiFi connection. Stops anything else
   else if (nextUpButton < nextUpButton_last) //falling edge
     BT.musicNextTrack();
   else if (prevDnButton < prevDnButton_last)  //falling edge
   {
     BT.musicPreviousTrack();
-  }else 
+  }else {
     allServersPrint(".");
+  }
   
 
 
