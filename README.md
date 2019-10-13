@@ -6,7 +6,7 @@ Hardware thingies: https://github.com/dzid26/BlueGenieBMW/tree/master/Hardware <
 -BK3254 (BT4.1 A2DP audio) - with UART enabled firmware (the ebay ones should be ok) ($2) <br>
 -MCP2515 board with some transciever ($2) <br> <br>
 
-~~Since there is no PCB project yet, for lazy people I recommend buying $3 BK8000L with a board and audio jack. Desoldier the BK8000L and replace with BK3254. Why not use BK8000L directly? - the chinese chips seem to have UART disabled and it is unclear how to easly change firmware. ~~
+~~Since there is no PCB project yet, for lazy people I recommend buying $3 BK8000L with a board and audio jack. Desoldier the BK8000L and replace with BK3254. Why not use BK8000L directly? - the chinese chips seem to have UART disabled and it is unclear how to easly change firmware.~~
  <br> <br>
 Connect things together. Use this PCB for convenience:
 https://oshpark.com/shared_projects/S17iaoNp
