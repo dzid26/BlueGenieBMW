@@ -1,0 +1,301 @@
+EESchema Schematic File Version 4
+LIBS:BlueGenie-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L wemos_mini:WeMos_mini U2
+U 1 1 5C4A032B
+P 5150 3200
+F 0 "U2" H 5150 3943 60  0000 C CNN
+F 1 "ESP8266 WeMos_mini" H 5150 3837 60  0000 C CNN
+F 2 "wemos_d1_mini:D1_mini_board" H 5700 2500 60  0001 C CNN
+F 3 "http://www.wemos.cc/Products/d1_mini.html" H 5150 3731 60  0000 C CNN
+	1    5150 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 5C4A3765
+P 6700 3150
+F 0 "R4" V 6600 3150 50  0000 C CNN
+F 1 "2.2k" V 6800 3150 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6630 3150 50  0001 C CNN
+F 3 "~" H 6700 3150 50  0001 C CNN
+	1    6700 3150
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5C4B5C29
+P 6350 3300
+F 0 "R2" H 6420 3346 50  0000 L CNN
+F 1 "3.3k" H 6420 3255 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6280 3300 50  0001 C CNN
+F 3 "~" H 6350 3300 50  0001 C CNN
+	1    6350 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5C4B5DED
+P 6350 3450
+F 0 "#PWR0101" H 6350 3200 50  0001 C CNN
+F 1 "GND" H 6355 3277 50  0000 C CNN
+F 2 "" H 6350 3450 50  0001 C CNN
+F 3 "" H 6350 3450 50  0001 C CNN
+	1    6350 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x07_Female J3
+U 1 1 5C4B5EB1
+P 8200 3150
+F 0 "J3" V 8365 3130 50  0000 C CNN
+F 1 "MCP2515_Connector_01x07_Female" V 8274 3130 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical" H 8200 3150 50  0001 C CNN
+F 3 "~" H 8200 3150 50  0001 C CNN
+	1    8200 3150
+	1    0    0    -1  
+$EndComp
+Text Label 8000 2850 2    50   ~ 0
+INT
+Text Label 8000 2950 2    50   ~ 0
+SCK
+Text Label 8000 3050 2    50   ~ 0
+MOSI
+Text Label 8000 3150 2    50   ~ 0
+MISO
+Text Label 8000 3250 2    50   ~ 0
+CS
+$Comp
+L power:GND #PWR0102
+U 1 1 5C4BBBDF
+P 7500 3350
+F 0 "#PWR0102" H 7500 3100 50  0001 C CNN
+F 1 "GND" H 7505 3177 50  0000 C CNN
+F 2 "" H 7500 3350 50  0001 C CNN
+F 3 "" H 7500 3350 50  0001 C CNN
+	1    7500 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 3350 8000 3350
+Text Label 5650 3250 0    50   ~ 0
+SCK
+Text Label 5650 3050 0    50   ~ 0
+MOSI
+Connection ~ 6350 3150
+Wire Wire Line
+	6350 3150 6550 3150
+Text Label 4650 2850 2    50   ~ 0
+5V
+Text Label 8000 3450 2    50   ~ 0
+5V
+Text Label 5650 2950 0    50   ~ 0
+CS
+Wire Wire Line
+	6850 3150 8000 3150
+Wire Wire Line
+	5650 3150 6350 3150
+$Comp
+L Device:R R3
+U 1 1 5C4BC53C
+P 6700 2850
+F 0 "R3" V 6600 2850 50  0000 C CNN
+F 1 "2.2k" V 6800 2850 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6630 2850 50  0001 C CNN
+F 3 "~" H 6700 2850 50  0001 C CNN
+	1    6700 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5C4BC586
+P 6350 2550
+F 0 "R1" H 6280 2504 50  0000 R CNN
+F 1 "3.3k" H 6280 2595 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6280 2550 50  0001 C CNN
+F 3 "~" H 6350 2550 50  0001 C CNN
+	1    6350 2550
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 5C4BC5BA
+P 6350 2400
+F 0 "#PWR0103" H 6350 2150 50  0001 C CNN
+F 1 "GND" H 6355 2227 50  0000 C CNN
+F 2 "" H 6350 2400 50  0001 C CNN
+F 3 "" H 6350 2400 50  0001 C CNN
+	1    6350 2400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6350 2700 6350 2850
+Wire Wire Line
+	6350 2850 6550 2850
+Wire Wire Line
+	6850 2850 8000 2850
+$Comp
+L F-6888:F-6888 U1
+U 1 1 5C4F1C3F
+P 3100 4300
+F 0 "U1" H 3150 4630 60  0000 C CNN
+F 1 "Bluetooth F-6888" H 3150 4736 60  0000 C CNN
+F 2 "F-6888_BK3254:F-6888" H 3100 4300 60  0001 C CNN
+F 3 "datasheet/F-6888_bk3254/F-6888_BK3254_datasheet.pdf" H 3100 4300 60  0001 C CNN
+	1    3100 4300
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:AudioJack3_Ground J1
+U 1 1 5C4F2010
+P 1550 3750
+F 0 "J1" H 1554 4092 50  0000 C CNN
+F 1 "AudioJack3_Ground" H 1554 4001 50  0000 C CNN
+F 2 "Connector_Audio:Jack_3.5mm_CUI_SJ1-3533NG_Horizontal_CircularHoles" H 1550 3750 50  0001 C CNN
+F 3 "~" H 1550 3750 50  0001 C CNN
+	1    1550 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6350 2850 6050 2850
+Wire Wire Line
+	6050 2850 6050 4000
+Connection ~ 6350 2850
+Wire Wire Line
+	4650 3550 4300 3550
+Wire Wire Line
+	4300 3550 4300 3450
+Wire Wire Line
+	4300 3450 3850 3450
+Wire Wire Line
+	3850 3550 4150 3550
+Wire Wire Line
+	4150 3550 4150 3500
+Wire Wire Line
+	6050 4000 4600 4000
+Wire Wire Line
+	4600 4000 4600 3250
+Wire Wire Line
+	4600 3250 4650 3250
+Wire Wire Line
+	4150 3500 4450 3500
+Wire Wire Line
+	4450 3500 4450 3450
+Wire Wire Line
+	4450 3450 4650 3450
+Wire Wire Line
+	1750 3650 2250 3650
+Wire Wire Line
+	1750 3750 2000 3750
+Wire Wire Line
+	2000 3750 2000 3850
+Wire Wire Line
+	2000 3850 2250 3850
+Wire Wire Line
+	1750 3850 1900 3850
+Wire Wire Line
+	1900 3850 1900 3800
+Wire Wire Line
+	1900 3800 2100 3800
+Wire Wire Line
+	2100 3800 2100 3750
+Wire Wire Line
+	2100 3750 2250 3750
+$Comp
+L power:GND #PWR0104
+U 1 1 5C4F46F8
+P 4250 2950
+F 0 "#PWR0104" H 4250 2700 50  0001 C CNN
+F 1 "GND" H 4255 2777 50  0000 C CNN
+F 2 "" H 4250 2950 50  0001 C CNN
+F 3 "" H 4250 2950 50  0001 C CNN
+	1    4250 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 2950 4250 2950
+Connection ~ 4250 2950
+Wire Wire Line
+	4250 2950 4650 2950
+$Comp
+L power:GND #PWR0105
+U 1 1 5C4F4CC9
+P 1550 3000
+F 0 "#PWR0105" H 1550 2750 50  0001 C CNN
+F 1 "GND" H 1555 2827 50  0000 C CNN
+F 2 "" H 1550 3000 50  0001 C CNN
+F 3 "" H 1550 3000 50  0001 C CNN
+	1    1550 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 3000 1550 2950
+Wire Wire Line
+	1550 2950 2250 2950
+Text Label 5650 2850 0    50   ~ 0
+3.3V
+Text Label 2250 4050 2    50   ~ 0
+3.3V
+$Comp
+L power:GND #PWR0106
+U 1 1 5C4F46C2
+P 5350 1200
+F 0 "#PWR0106" H 5350 950 50  0001 C CNN
+F 1 "GND" H 5355 1027 50  0000 C CNN
+F 2 "" H 5350 1200 50  0001 C CNN
+F 3 "" H 5350 1200 50  0001 C CNN
+	1    5350 1200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 J2
+U 1 1 5C4F2DCF
+P 4850 1000
+F 0 "J2" H 4930 992 50  0000 L CNN
+F 1 "Screw_Terminal_01x02" V 4930 901 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm" H 4850 1000 50  0001 C CNN
+F 3 "~" H 4850 1000 50  0001 C CNN
+	1    4850 1000
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4650 1950 4650 2850
+NoConn ~ 4650 1950
+$Comp
+L power:GND #PWR0107
+U 1 1 5DA180A8
+P 5150 2050
+F 0 "#PWR0107" H 5150 1800 50  0001 C CNN
+F 1 "GND" H 5155 1877 50  0000 C CNN
+F 2 "" H 5150 2050 50  0001 C CNN
+F 3 "" H 5150 2050 50  0001 C CNN
+	1    5150 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 1950 5150 2050
+NoConn ~ 5150 1950
+Wire Wire Line
+	5350 1200 4950 1200
+Wire Wire Line
+	4850 1200 4650 1200
+NoConn ~ 4650 1200
+Text Label 4600 1150 0    50   ~ 0
+12V
+Text Notes 4550 1550 0    50   ~ 0
+Place for optional\n12V DC-DC converter\nAlbo kurwa po prostu 5V terminal i \nsie przykręci jakąś mini DCDC
+$EndSCHEMATC

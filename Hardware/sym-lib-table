@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name wemos_mini)(type Legacy)(uri ${KIPRJMOD}/d1_mini_kicad/library/wemos_mini.lib)(options "")(descr ""))
+  (lib (name F-6888)(type Legacy)(uri ${KIPRJMOD}/F-6888_BK3254/F-6888.lib)(options "")(descr ""))
+  (lib (name jacks)(type Legacy)(uri ${KIPRJMOD}/Miscellaneous/jacks.lib)(options "")(descr ""))
+)
