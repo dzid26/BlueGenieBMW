@@ -15,11 +15,11 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L wemos_mini:WeMos_mini U2
+L wemos_mini:WeMos_mini ESP8266
 U 1 1 5C4A032B
 P 5150 3200
-F 0 "U2" H 5150 3943 60  0000 C CNN
-F 1 "ESP8266 WeMos_mini" H 5150 3837 60  0000 C CNN
+F 0 "ESP8266" H 5150 3943 60  0000 C CNN
+F 1 "WeMos_mini" H 5150 3837 60  0000 C CNN
 F 2 "wemos_d1_mini:D1_mini_board" H 5700 2500 60  0001 C CNN
 F 3 "http://www.wemos.cc/Products/d1_mini.html" H 5150 3731 60  0000 C CNN
 	1    5150 3200
@@ -64,7 +64,7 @@ U 1 1 5C4B5EB1
 P 8200 3150
 F 0 "J3" V 8365 3130 50  0000 C CNN
 F 1 "MCP2515_Connector_01x07_Female" V 8274 3130 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical" H 8200 3150 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x07_P2.54mm_Vertical" H 8200 3150 50  0001 C CNN
 F 3 "~" H 8200 3150 50  0001 C CNN
 	1    8200 3150
 	1    0    0    -1  
@@ -149,26 +149,15 @@ Wire Wire Line
 Wire Wire Line
 	6850 2850 8000 2850
 $Comp
-L F-6888:F-6888 U1
+L F-6888:F-6888 BK3254
 U 1 1 5C4F1C3F
 P 3100 4300
-F 0 "U1" H 3150 4630 60  0000 C CNN
-F 1 "Bluetooth F-6888" H 3150 4736 60  0000 C CNN
+F 0 "BK3254" H 3150 4630 60  0000 C CNN
+F 1 "F-6888" H 3150 4736 60  0000 C CNN
 F 2 "F-6888_BK3254:F-6888" H 3100 4300 60  0001 C CNN
 F 3 "datasheet/F-6888_bk3254/F-6888_BK3254_datasheet.pdf" H 3100 4300 60  0001 C CNN
 	1    3100 4300
 	-1   0    0    1   
-$EndComp
-$Comp
-L Connector:AudioJack3_Ground J1
-U 1 1 5C4F2010
-P 1550 3750
-F 0 "J1" H 1554 4092 50  0000 C CNN
-F 1 "AudioJack3_Ground" H 1554 4001 50  0000 C CNN
-F 2 "Connector_Audio:Jack_3.5mm_CUI_SJ1-3533NG_Horizontal_CircularHoles" H 1550 3750 50  0001 C CNN
-F 3 "~" H 1550 3750 50  0001 C CNN
-	1    1550 3750
-	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	6350 2850 6050 2850
@@ -198,54 +187,18 @@ Wire Wire Line
 Wire Wire Line
 	4450 3450 4650 3450
 Wire Wire Line
-	1750 3650 2250 3650
-Wire Wire Line
-	1750 3750 2000 3750
-Wire Wire Line
-	2000 3750 2000 3850
-Wire Wire Line
-	2000 3850 2250 3850
-Wire Wire Line
-	1750 3850 1900 3850
-Wire Wire Line
-	1900 3850 1900 3800
-Wire Wire Line
-	1900 3800 2100 3800
-Wire Wire Line
-	2100 3800 2100 3750
-Wire Wire Line
-	2100 3750 2250 3750
+	1950 4150 1950 3950
 $Comp
 L power:GND #PWR0104
 U 1 1 5C4F46F8
-P 4250 2950
-F 0 "#PWR0104" H 4250 2700 50  0001 C CNN
-F 1 "GND" H 4255 2777 50  0000 C CNN
-F 2 "" H 4250 2950 50  0001 C CNN
-F 3 "" H 4250 2950 50  0001 C CNN
-	1    4250 2950
-	1    0    0    -1  
+P 3850 2950
+F 0 "#PWR0104" H 3850 2700 50  0001 C CNN
+F 1 "GND" H 3855 2777 50  0000 C CNN
+F 2 "" H 3850 2950 50  0001 C CNN
+F 3 "" H 3850 2950 50  0001 C CNN
+	1    3850 2950
+	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	3850 2950 4250 2950
-Connection ~ 4250 2950
-Wire Wire Line
-	4250 2950 4650 2950
-$Comp
-L power:GND #PWR0105
-U 1 1 5C4F4CC9
-P 1550 3000
-F 0 "#PWR0105" H 1550 2750 50  0001 C CNN
-F 1 "GND" H 1555 2827 50  0000 C CNN
-F 2 "" H 1550 3000 50  0001 C CNN
-F 3 "" H 1550 3000 50  0001 C CNN
-	1    1550 3000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1550 3000 1550 2950
-Wire Wire Line
-	1550 2950 2250 2950
 Text Label 5650 2850 0    50   ~ 0
 3.3V
 Text Label 2250 4050 2    50   ~ 0
@@ -267,35 +220,94 @@ U 1 1 5C4F2DCF
 P 4850 1000
 F 0 "J2" H 4930 992 50  0000 L CNN
 F 1 "Screw_Terminal_01x02" V 4930 901 50  0000 L CNN
-F 2 "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm" H 4850 1000 50  0001 C CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-2_P5.08mm" H 4850 1000 50  0001 C CNN
 F 3 "~" H 4850 1000 50  0001 C CNN
 	1    4850 1000
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	4650 1950 4650 2850
-NoConn ~ 4650 1950
-$Comp
-L power:GND #PWR0107
-U 1 1 5DA180A8
-P 5150 2050
-F 0 "#PWR0107" H 5150 1800 50  0001 C CNN
-F 1 "GND" H 5155 1877 50  0000 C CNN
-F 2 "" H 5150 2050 50  0001 C CNN
-F 3 "" H 5150 2050 50  0001 C CNN
-	1    5150 2050
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5150 1950 5150 2050
-NoConn ~ 5150 1950
-Wire Wire Line
 	5350 1200 4950 1200
 Wire Wire Line
 	4850 1200 4650 1200
-NoConn ~ 4650 1200
-Text Label 4600 1150 0    50   ~ 0
-12V
 Text Notes 4550 1550 0    50   ~ 0
-Place for optional\n12V DC-DC converter\nAlbo kurwa po prostu 5V terminal i \nsie przykręci jakąś mini DCDC
+5V
+$Comp
+L jacks:PJ-320B Jack1
+U 1 1 5DA2F789
+P 1300 4250
+F 0 "Jack1" H 1356 4751 39  0000 C CNN
+F 1 "PJ-320B" H 1356 4676 39  0000 C CNN
+F 2 "Connector_Audio:Jack_3.5mm_PJ320D_Horizontal" H 1500 4350 39  0001 C CNN
+F 3 "" H 1500 4350 39  0001 C CNN
+	1    1300 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1700 3950 1700 3750
+Wire Wire Line
+	1950 4150 1700 4150
+Wire Wire Line
+	2000 3850 2000 4350
+Wire Wire Line
+	2000 4350 1700 4350
+Wire Wire Line
+	4650 1200 4650 2850
+$Comp
+L power:GND #PWR0105
+U 1 1 5DA38872
+P 4400 2950
+F 0 "#PWR0105" H 4400 2700 50  0001 C CNN
+F 1 "GND" H 4405 2777 50  0000 C CNN
+F 2 "" H 4400 2950 50  0001 C CNN
+F 3 "" H 4400 2950 50  0001 C CNN
+	1    4400 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4650 2950 4400 2950
+$Comp
+L Connector:Conn_01x08_Female J4
+U 1 1 5DA39631
+P 5850 3150
+F 0 "J4" H 5877 3126 50  0000 L CNN
+F 1 "Conn_01x08_Female" H 5550 2550 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 5850 3150 50  0001 C CNN
+F 3 "~" H 5850 3150 50  0001 C CNN
+	1    5850 3150
+	1    0    0    -1  
+$EndComp
+Connection ~ 5650 3150
+$Comp
+L Connector:Conn_01x08_Female J1
+U 1 1 5DA3968F
+P 4450 3150
+F 0 "J1" H 4344 3635 50  0000 C CNN
+F 1 "Conn_01x08_Female" H 4450 2600 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 4450 3150 50  0001 C CNN
+F 3 "~" H 4450 3150 50  0001 C CNN
+	1    4450 3150
+	-1   0    0    -1  
+$EndComp
+Connection ~ 4650 2850
+Connection ~ 4650 2950
+Connection ~ 4650 3250
+Connection ~ 4650 3450
+Connection ~ 4650 3550
+Wire Wire Line
+	1700 3750 2250 3750
+Wire Wire Line
+	2000 3850 2250 3850
+Wire Wire Line
+	1950 3950 2250 3950
+$Comp
+L power:GND #PWR?
+U 1 1 5DD233E3
+P 2250 2950
+F 0 "#PWR?" H 2250 2700 50  0001 C CNN
+F 1 "GND" H 2255 2777 50  0000 C CNN
+F 2 "" H 2250 2950 50  0001 C CNN
+F 3 "" H 2250 2950 50  0001 C CNN
+	1    2250 2950
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC
