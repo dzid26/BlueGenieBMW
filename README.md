@@ -11,9 +11,9 @@ Hardware thingies: https://github.com/dzid26/BlueGenieBMW/tree/master/Hardware <
 Connect things together. Use this PCB for convenience:
 https://oshpark.com/shared_projects/S17iaoNp
  <br> <br>
+![PCB overview](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/PCB%20overview.png)
 
-
-Features: <br>
+**Features**: <br>
 -Next / Previous - (CAN-bus) steering buttons  <br>
 -OTA over wifi <br>
  <br>
