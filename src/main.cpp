@@ -7,24 +7,47 @@
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
 #include <SPI.h>
 #include "mcp_can.h"
-#define OTA_DEBUG
+#define DEBUG
 #include <ArduinoOTA.h>
 #include <ESP8266mDNS.h>
-//#define DEBUG
-#define USE_SW_SERIAL
-#include <BK3254.h>
+#define OTA_DEBUG
+#include "BK3254.h"
+// #define BENCH
 
-// the cs pin of the version after v1.1 is default to D9
-// v0.9b and v1.0 is default D10
-const int SPI_CS_PIN = D8;
-const int MCP_INT_PIN = D0; //D4, D3, D8 can't be hight at boot, D0 can't be used as interrupt
-uint8_t BT_reset = D3; //dummy pin - not used currently
+
+// #define LED_BUILTIN 2
+// static const uint8_t D0   = 16;
+// static const uint8_t D1   = 5;
+// static const uint8_t D2   = 4;
+// static const uint8_t D3   = 0;
+// static const uint8_t D4   = 2;
+// static const uint8_t D5   = 14;
+// static const uint8_t D6   = 12;
+// static const uint8_t D7   = 13;
+// static const uint8_t D8   = 15;
+// static const uint8_t RX   = 3;
+// static const uint8_t TX   = 1;
+
+
+//default values. Switchable via compiler options
+#ifndef CAN_baud
+  #define CAN_baud CAN_100KBPS
+#endif
+#define SPI_CS_PIN D8
+#ifndef MCP_INT_PIN
+  #define MCP_INT_PIN D2
+#endif
+#ifdef USE_SW_SERIAL
+  SoftwareSerial swSerial(D2,D1); //rx,tx
+  #define SerialForBT swSerial
+#else
+  #define SerialForBT Serial
+#endif
+#define SPI_CS_PIN D8
+#define BT_reset D3 //dummy pin - not used currently
+  
 MCP_CAN CAN(SPI_CS_PIN);                                    // Set CS pin
-
-SoftwareSerial swSerial(D2,D1); //rx,tx
-BK3254 BT(&swSerial, BT_reset); //Serial for controlling the BK3254
-
-bool flagRecv = false;
+BK3254 BT(&SerialForBT, BT_reset); //Serial for controlling the BK3254
 char str[20];
 uint16_t myTime=0;
 uint16_t timeout=500;
@@ -42,7 +65,7 @@ WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 void init_WiFiManager(const char *Hostname){
   pinMode(LED_BUILTIN, OUTPUT);
-  //WiFi.disconnect(); // forget SSID for debigging
+  //WiFi.disconnect(); // forget SSID for debugging
   WiFi.printDiag(Serial); //Remove this line if you do not want to see WiFi password printed
   if (WiFi.SSID()==""){
     Serial.println("We haven't got any access point credentials, so get them now");   
@@ -95,23 +118,33 @@ void init_ArduinoOTA(const char *Hostname){
   ArduinoOTA.begin();
 }
 
-void init_CAN()
-{
-  if(CAN.begin(MCP_STDEXT, CAN_100KBPS, MCP_8MHZ)==CAN_OK )       // init can bus : baudrate = 500k
-    Serial.println("CAN BUS Shield init ok!");
-  else
-    Serial.println("CAN BUS Shield init fail");
-  CAN.setMode(MCP_LISTENONLY); 
+void ICACHE_RAM_ATTR MCP2515_ISR() {
+;
+}
 
+
+void init_CAN()
+{ 
+  byte a=CAN.begin(MCP_STD, CAN_baud, MCP_8MHZ);
+  if(a==CAN_OK ){     // init can bus : baudrate = 500k
+    Serial.println("CAN BUS Shield init ok!" + a);
+  }
+  else
+  {
+    Serial.println("CAN BUS Shield init fail: " + a);
+  }
+  CAN.setMode(MCP_LISTENONLY);
+
+  
   //attachInterrupt(digitalPinToInterrupt(MCP_INT_PIN), &MCP2515_ISR, FALLING); // interrupt not needed, since buffer reading logic is outside anyway
   pinMode(MCP_INT_PIN, INPUT);
 
-
-  CAN.init_Mask(0,0,0x07FF0000);                // Init first mask...
+  //https://github.com/dzid26/opendbc-BMW-E8x-E9x/blob/master/bmw_e9x_e8x.dbc
+  CAN.init_Mask(0,0,0x07ff0000);                // Apply filter to all messages (don't let then be passed without looking at the filters below)
   CAN.init_Filt(0,0,0x01d60000);                // Init first filter...
-  CAN.init_Filt(1,0,0x03b40000);                // Init second filter...
+  CAN.init_Filt(1,0,0x01d60000);                // Init second filter...
   
-  CAN.init_Mask(1,0,0x07FF0000);                // Init second mask... 
+  CAN.init_Mask(1,0,0x07ff0000);                // Init second mask... 
   CAN.init_Filt(2,0,0x01d60000);                // Init third filter...
   CAN.init_Filt(3,0,0x01d60000);                // Init fouth filter...
   CAN.init_Filt(4,0,0x01d60000);                // Init fifth filter...
@@ -152,7 +185,7 @@ void allServersPrintLn(String s=""){ allServersPrint(s + "\r\n");}
 
 void setup()
 {
-  Serial.begin(115200); //for debugging and info
+  Serial.begin(9600); //for debugging and info
 
   BT.begin(); //it also begins Serial (TX0) to 9600
   init_CAN();
@@ -173,6 +206,8 @@ void setup()
   delay(100);
   myTime=millis();
   BT.voicesOff();
+  BT.changeName("BlueGenie BMW");
+  delay(100);
   BT.connectLastDevice();
   //BT.volumeSet("0x00"); 
   BT.volumeGet();
@@ -211,7 +246,7 @@ void handlingTelnetComm()
     for (int i = 0; i < MAX_SRV_CLIENTS; i++)
       while (serverClients[i].available()) {//&& swSerial.availableForWrite() > 0) {
         // working char by char is not very efficient
-        swSerial.write(serverClients[i].read());
+        SerialForBT.write(serverClients[i].read());
       }
   #else
     // loopback/3000000baud average: 312KB/s
@@ -351,7 +386,9 @@ void loop()
       messageText = "\r\n---------------------------\r\n" + String(canId) + ":  0x";
       for(int j = 0; j<message_length; j++)    // print the data
         messageText += String(message_buffer[j], HEX) + "\t";
-      Serial.println(messageText);
+        #ifdef DEBUG
+          Serial.println(messageText);
+        #endif
       allServersPrintLn(messageText);
 
       //Extract messages
@@ -364,13 +401,18 @@ void loop()
         }
   }
 
-  if ((nextUpButton && volUpButton) || initialConfigNeeded) //add VehSpd==0 condition
-    wifiConfigureOnEvent(); //two up buttons held - configure WiFi connection. Stops anything else
-  else if (nextUpButton < nextUpButton_last) //falling edge
+  if ((prevDnButton && volDnButton) || initialConfigNeeded){ //add VehSpd==0 condition
+    allServersPrintLn("WiFi config requested");
+    wifiConfigureOnEvent(); //two down buttons held - configure WiFi connection. Stops anything else
+  }
+  else if (nextUpButton < nextUpButton_last){ //falling edge
     BT.musicNextTrack();
+    allServersPrintLn("BT next requested");
+  }
   else if (prevDnButton < prevDnButton_last)  //falling edge
   {
     BT.musicPreviousTrack();
+    allServersPrintLn("BT previous requested");
   }else {
     allServersPrint(".");
   }
