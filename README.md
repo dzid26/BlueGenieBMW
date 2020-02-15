@@ -15,13 +15,13 @@ Bluetooth audio for BMW with CAN-bus support for steering wheel buttons control.
 - BK3254 (BT4.1 A2DP audio) - with UART enabled firmware (the ebay ones should be ok) ($2) 
 - MCP2515 board with some transciever ($2) 
 - https://oshpark.com/shared_projects/qK7vXqp4 
+- Audio jack PJ-320D
 - (optional) resistors (2x2.2k & 2x3.3k) for level shifting for longetivity of ESP8266. You can replace them with short wire if you're on a brave side.
 <br> <br>
 
 Solder the stuff together.
  <br> <br>
 ![PCB overview](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/PCB%20overview.png)
-
  
 Installation: <br>
 - Import project to https://platformio.org/platformio-ide and flash ESP8266 using USB cable (for the first time).
@@ -34,3 +34,10 @@ Some info regarding K-CAN - it is @100kbps  <br>
 - https://us.autologic.com/news/bmw-instrument-cluster-lights-and-the-k-bus-failure  <br>
 - https://www.newtis.info/tisv2/a/en/e82-123d-cou/repair-manuals/61-general-vehicle-electrical-system/2EAqiv9
 - For CAN messages, refer to https://github.com/dzid26/opendbc-BMW-E8x-E9x/blob/master/bmw_e9x_e8x.dbc.
+
+<br> <br><br> <br>
+Photos:
+![PCB](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/Ready%20to%20solder.jpg)
+![PCB](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/PCB%2BCAN%2BESP%2B5V%20shields%20together.jpg)
+![PCB](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/MCP2515.jpg)
+![PCB](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/BK3254.jpg)
