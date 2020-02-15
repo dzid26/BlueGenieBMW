@@ -1,0 +1,16 @@
+
+[submodule "d1_mini_kicad"]
+path = Hardware/d1_mini_kicad
+url = https://github.com/jerome-labidurie/d1_mini_kicad.git
+
+[submodule "BK3254"]
+path = lib/BK3254
+url = https://github.com/tomaskovacik/BK3254.git
+
+[submodule "MCP_CAN"]
+path = lib/MCP_CAN_lib
+url = https://github.com/coryjfowler/MCP_CAN_lib.git
+
+[submodule "WifiManager"]
+path = lib/WifiManager
+url = https://github.com/kentaylor/WiFiManager.git
