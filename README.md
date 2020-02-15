@@ -24,6 +24,7 @@ Solder the stuff together.
 ![PCB overview](https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/PCB%20overview.png)
  
 Installation: <br>
+- clone the repository and also run download_libraries.bat from /lib folder  :/
 - Import project to https://platformio.org/platformio-ide and flash ESP8266 using USB cable (for the first time).
 - Power it with 5V cigarette charger or get Wemos power shield from ebay.
 - Find K-CAN ("chasis" CAN-bus) - twisted green (CAN HIGH) and orange (CAN LOW) cables behind the radio and splice it and connect to MCP2515.  <br>
