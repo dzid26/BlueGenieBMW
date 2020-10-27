@@ -10,7 +10,7 @@ Bluetooth audio for BMW with CAN-bus support for steering wheel buttons control.
  <br>
  <br>
  
-**Hardware thingies**: 
+**Hardware thingies** ([BOM](https://htmlpreview.github.io/?https://github.com/dzid26/BlueGenieBMW/blob/master/Hardware/bom.html)): 
 - ESP8266 - (Wemos D1 mini) ($3) (they usually come with the black sockets)  
 - BK3254 (BT4.1 A2DP audio) - with UART enabled firmware (the ebay ones should be ok) ($2) 
 - MCP2515 board with some transciever ($2) 
